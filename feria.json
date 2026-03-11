@@ -1,0 +1,144 @@
+{
+  "name": "feria",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1582Loc-L2YyF9yaTxmRt7IqWkpg9btprlP7TgIp_kZw",
+          "mode": "list",
+          "cachedResultName": "Datos de contacto (respuestas)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1582Loc-L2YyF9yaTxmRt7IqWkpg9btprlP7TgIp_kZw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 300452363,
+          "mode": "list",
+          "cachedResultName": "Respuestas de formulario 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1582Loc-L2YyF9yaTxmRt7IqWkpg9btprlP7TgIp_kZw/edit#gid=300452363"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "1bbb3f9d-f250-4022-a7df-8d9514973fca",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "GB1HcUhpu3XdjT5s",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "68d3be10-82ba-4391-98eb-0127b51af238",
+              "name": "telefono_formateado",
+              "value": "=54{{ $json[\"Número de teléfono\"] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        0
+      ],
+      "id": "9cc47f2d-dca2-4997-ae3c-140c6f41a275",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:3000/api/sendText",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Api-Key",
+              "value": "fb71c2c9f15a423cbe979ec244a2f928"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "=json",
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "jsonBody": "={\n  \"chatId\": \"{{ $json.telefono_formateado }}@c.us\",\n  \"text\": \"✨ ¡Hola {{ $json['Apellido y Nombre'] }}! Gracias por inscribirte a La Soberana – La Feria del Piloto 🎭\\n\\nNos pone muy felices que quieras ser parte de este nuevo año de encuentros, trabajo colaborativo y comunidad emprendedora 🧡\\n\\nPara recibir toda la información importante, sumate a nuestros espacios oficiales:\\n\\n📌 Grupo de WhatsApp:\\nhttps://chat.whatsapp.com/FdtftwSnTDjEkL6eliUAZ7\\n\\n📢 Canal de difusión:\\nhttps://whatsapp.com/channel/0029Vb6iuj12UPBFOpROQ21q\\n\\nPor estos medios compartiremos novedades, fechas y toda la información sobre las próximas ediciones.\\n\\n¡Bienvenida/o a La Soberana – La Feria del Piloto! ✨\",\n  \"session\": \"default\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        432,
+        0
+      ],
+      "id": "5438e613-4e68-4f46-905d-d4c615846569",
+      "name": "HTTP Request"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "versionId": "78eb47d9-17bd-4fc2-af4b-c04d6b4d6c84",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "47279345d97db5f557235736fcc4f1eccadea4948e3b6ab69a08a06e91575993"
+  },
+  "id": "oQaWiF8fOZVeyjh7",
+  "tags": []
+}
