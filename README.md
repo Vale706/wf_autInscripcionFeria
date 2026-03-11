@@ -1,6 +1,9 @@
 🚀 Workflow: Automatización de Notificaciones para "La Soberana"
 Este flujo automatiza el envío de mensajes de bienvenida personalizados a través de WhatsApp cada vez que un nuevo emprendedor se registra en la feria mediante un formulario de Google.
 
+<img width="612" height="236" alt="image" src="https://github.com/user-attachments/assets/967c52c7-dbf0-4c98-8167-475a7633cf50" />
+
+
 📋 Componentes del Workflow
 El diseño consta de tres nodos principales interconectados:
 
